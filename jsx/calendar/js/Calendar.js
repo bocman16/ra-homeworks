@@ -12,19 +12,6 @@ const getWeekDates = startDate => {
   return dateArray;
 };
 
-
-const GetTd = ({ someDate, needDate }) => {
-  let needClass;
-  if (needDate.date.getMonth() !== someDate.getMonth()) {
-    needClass = "ui-datepicker-other-month";
-  } else if (needDate.date.getDate() === someDate.getDate()) {
-    needClass = "ui-datepicker-today";
-  }
-  return <td className={needClass}>{someDate.getDate()}</td>;
-};
-
-
-
 const getAllTr = needDate => {
   let startDate = new Date(needDate.date.getTime());
   startDate.setDate(1);
@@ -36,23 +23,23 @@ const getAllTr = needDate => {
   } else {
     startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
   }
-
-  const arr = [];
-
-  do {
-    arr.push(
-      <tr key={startDate}>
-        {getWeekDates(startDate).map(someDate => (
-          <GetTd key={someDate} someDate={someDate} needDate={needDate} />
-        ))}
-      </tr>
-    );
-    
-    startDate.setDate(startDate.getDate() + 7);
-  } while (startDate.getMonth() === needDate.date.getMonth());
-
-  return arr;
+  return startDate;
 };
+
+
+const GetTd = ({ someDate, needDate }) => {
+  let needClass;
+  if (needDate.date.getMonth() !== someDate.getMonth()) {
+    needClass = "ui-datepicker-other-month";
+  } else if (needDate.date.getDate() === someDate.getDate()) {
+    needClass = "ui-datepicker-today";
+  }
+
+//  return needClass;
+//console.log(needClass,someDate.getDate())
+  return <td className={needClass}>{someDate.getDate()}</td>;
+};
+
 
 const Calendar = date => {
   const dateRus = date.date.toLocaleString("ru", {
@@ -63,6 +50,26 @@ const Calendar = date => {
   });
   const month = date.date.toLocaleString("ru", { month: "long" });
   const dateArry = dateRus.split(" ");
+
+  const startDate = getAllTr(date);
+ // const needClass;
+  const arr = [];
+
+  do {
+    arr.push(
+      <tr key={startDate}>
+        {getWeekDates(startDate).map(someDate => (
+
+         // <td className={needClass}>{someDate.getDate()}</td>
+
+         <GetTd key={someDate} someDate={someDate} needDate={date} />
+
+        ))}
+      </tr>
+    );
+
+    startDate.setDate(startDate.getDate() + 7);
+  } while (startDate.getMonth() === date.date.getMonth());
 
   const calendares = (
     <div className="ui-datepicker">
@@ -117,7 +124,7 @@ const Calendar = date => {
             </th>
           </tr>
         </thead>
-        <tbody>{getAllTr(date)}</tbody>
+        <tbody>{arr}</tbody>
       </table>
     </div>
   );
