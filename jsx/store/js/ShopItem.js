@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 const ShopItem = () => {
   return (
     <div className="main-content">

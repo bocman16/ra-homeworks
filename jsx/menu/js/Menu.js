@@ -1,22 +1,32 @@
-
-
-const Menu = (items, opened = false)=>{
-    if(items.opened){
-        return (
-        <div className="menu menu-open">
-        <div className="menu-toggle"><span></span></div>
+const Menu = (itemsList, opened = false) => {
+  if (itemsList.opened) {
+    return (
+      <div className="menu menu-open">
+        <div className="menu-toggle">
+          <span />
+        </div>
         <nav>
           <ul>
-            <li><a href="#home">{items.items[0].title}</a></li>
-            <li><a href="#about">{items.items[1].title}</a></li>
-            <li><a href="#contact">{items.items[2].title}</a></li>
+            <li>
+              {itemsList.items.map(item => {
+                return (
+                  <li>
+                    <a href={item.href}>{item.title}</a>
+                  </li>
+                );
+              })}
+            </li>
           </ul>
         </nav>
-      </div> )
-    }else{
-        return (
-        <div className="menu">
-        <div className="menu-toggle"><span></span></div>
-      </div>)
-    }
-  }  
+      </div>
+    );
+  } else {
+    return (
+      <div className="menu">
+        <div className="menu-toggle">
+          <span />
+        </div>
+      </div>
+    );
+  }
+};
