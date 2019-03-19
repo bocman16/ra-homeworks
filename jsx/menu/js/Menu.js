@@ -1,5 +1,5 @@
-const Menu = (itemsList, opened = false) => {
-  if (itemsList.opened) {
+const Menu = (props, opened = false) => {
+  if (props.opened) {
     return (
       <div className="menu menu-open">
         <div className="menu-toggle">
@@ -8,7 +8,7 @@ const Menu = (itemsList, opened = false) => {
         <nav>
           <ul>
             <li>
-              {itemsList.items.map(item => {
+              {props.items.map(item => {
                 return (
                   <li>
                     <a href={item.href}>{item.title}</a>
